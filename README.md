@@ -14,7 +14,7 @@ Copy [gpg.conf](https://github.com/Kajisav/gpgref/raw/master/gpg.conf) to the %A
 
 Typically, this is located at C:\Users\YourName\AppData\Roaming\gnupg. You can press WindowsKey + R and type %APPDATA%\gnupg and click OK or press Enter to open a file explorer window to the correct directory.
 
-If you plan to use PuTTY or OpenSSH to connect to remote servers using a PGP/GPG authentication key or a smartcard, then also copy [gpg-agent.conf](https://github.com/Kajisav/gpgref/raw/master/gpg-agent.conf) to the %APPDATA%/gnupg directory right along with gpg.conf.
+If you plan to use PuTTY or OpenSSH to connect to remote servers using a PGP/GPG authentication key or a smartcard, then also copy [gpg-agent.conf](https://github.com/Kajisav/gpgref/raw/master/gpg-agent.conf) to the %APPDATA%\gnupg directory right along with gpg.conf.
 
 #### For GNU+Linux
 
