@@ -8,7 +8,7 @@ It should work on GNU+Linux systems running [GnuPG](https://gnupg.org/) and Micr
 Setup involves copying the configuration files from here into the home directory of your system.
 Configuration is the same whether you are using Windows or GNU+Linux, except where noted below.
 
-**For Microsoft Windows**
+#### For Microsoft Windows
 
 Copy [gpg.conf](https://github.com/Kajisav/gpgref/raw/master/gpg.conf) to the %APPDATA%\gnupg directory.
 
@@ -16,7 +16,7 @@ Typically, this is located at C:\Users\YourName\AppData\Roaming\gnupg. You can p
 
 If you plan to use PuTTY or OpenSSH to connect to remote servers using a PGP/GPG authentication key or a smartcard, then also copy [gpg-agent.conf](https://github.com/Kajisav/gpgref/raw/master/gpg-agent.conf) to the %APPDATA%/gnupg directory right along with gpg.conf.
 
-**For GNU+Linux**
+#### For GNU+Linux
 
 Copy my gpg.conf to your GnuPG home directory:
 
@@ -36,7 +36,7 @@ Copy .pam_environment or .bashrc from the gpgref repository to your user's home 
 
 Using pam_env should cause any process using SSH_AUTH_SOCK when talking to ssh-agent, to talk to the gpg-agent instead. The bash solution is perhaps less elegant and may be more error prone when it comes to changing TTY and X sessions, but may be preferred if you don't want gpg-agent overriding ssh-agent system-wide, for instance.
 
-**1st Time Environment Setup**
+#### 1st Time Environment Setup
 
 If you used the pam_env method above:
     
@@ -48,7 +48,7 @@ If you used the Bash method:
 
 References above to $XDG_RUNTIME_DIR points to /run/user/1000/ on my system, set by X. You can do echo $XDG_RUNTIME_DIR to confirm where your gnupg socket directory is located. You can also run gpg-agent from the command line along with --daemon to see the directory gpg-agent is using for its socket and export that to SSH_AUTH_SOCK.
 
-**Disabling Gnome Keyring's SSH and PKI support**
+#### Disabling Gnome Keyring's SSH and PKI support
 
 Gnome3's built-in keyring will set SSH_AUTH_SOCK on startup to $XDG_RUNTIME_DIR/keyring/ssh and intercept traffic intended for ssh-agent (or in our case, to gpg-agent). To disable this:
 
