@@ -1,7 +1,7 @@
 # gpgref
 My personal GnuPG configuration.
 
-It should work on GNU+Linux systems running gnupg v1 or v2 and Microsoft Windows running [Gpg4win](https://www.gpg4win.org).
+It should work on GNU+Linux systems running GnuPG and Microsoft Windows running [Gpg4win](https://www.gpg4win.org).
 
 ### Installation
 
