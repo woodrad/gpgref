@@ -28,7 +28,7 @@ If you plan to use OpenSSH along with your PGP/GPG key or with a smartcard, you 
     
     cp gpg-agent.conf ~/.gnupg/.
     
-If you are using the Gnome 3 desktop window manager, you probably also need to disable Gnome Keyring from intercepting signals to gpg-agent. [See below](https://github.com/Kajisav/gpgref/blob/master/README.md#disabling-gnome-keyrings-ssh-and-pkcs-11-support).
+If you are using the Gnome 3 desktop window manager, you probably also need to disable Gnome Keyring from intercepting signals to gpg-agent. [See below](https://github.com/Kajisav/gpgref#disabling-gnome-keyrings-ssh-and-pkcs-11-support).
 
 ### GNU+Linux Environment Setup
 
