@@ -18,11 +18,11 @@ If you plan to use PuTTY or OpenSSH to connect to remote servers using a PGP/GPG
 
 #### Caveats using Yubikey on Windows
 
-If you are using a [Yubikey](https://www.yubico.com/) alongside Gpg4win, there is an issue where after unplugging the Yubikey from the system, when you go to plug it back in, the gpg-agent is not able to talk to the Yubikey and trying to do
+If you are using a [Yubikey](https://www.yubico.com/) alongside Gpg4win, there is an issue where after unplugging the Yubikey from the system, when you go to plug it back in, the gpg-agent is not able to talk to the Yubikey and trying to do:
 
     gpg --card-status
     
-from a commmand line results in a card error being returned. The best solution to this that I have tested and been using is to create a simple BAT file with instructions to stop and restart some services after unplugging the Yubikey and making a shortcut on the desktop to this BAT file:
+from a command line results in a card error being returned. The best solution to this that I have tested is to create a simple BAT file with instructions to stop and restart some services after unplugging the Yubikey and making a shortcut on the desktop to this BAT file:
 
     gpg-connect-agent killagent /bye
     net stop scardsvr
