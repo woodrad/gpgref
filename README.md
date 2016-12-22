@@ -16,7 +16,7 @@ Typically, this is located at C:\Users\YourName\AppData\Roaming\gnupg. You can p
 
 If you plan to use PuTTY or OpenSSH to connect to remote servers using a PGP/GPG authentication key or a smartcard, then also copy [gpg-agent.conf](https://github.com/Kajisav/gpgref/raw/master/gpg-agent.conf) to the %APPDATA%\gnupg directory right along with gpg.conf.
 
-If you are using a [Yubico Yubikey](https://www.yubico.com/) (USB hardware token) you should read the [Windows Yubikey Caveats](https://github.com/Kajisav/gpgref#Caveats_using_Yubikey_on_Windows) section below.
+If you are using a [Yubico Yubikey](https://www.yubico.com/) (USB hardware token) you should read the [Windows Yubikey Caveats](https://github.com/Kajisav/gpgref#caveats-using-yubikey-on-windows) section below.
 
 #### For GNU+Linux
 
@@ -58,7 +58,7 @@ Gnome3's built-in keyring will set SSH_AUTH_SOCK on startup to $XDG_RUNTIME_DIR/
     echo 'X-GNOME-Autostart-enabled=false' >> ~/.config/autostart/gnome-keyring-ssh.desktop
     echo 'X-GNOME-Autostart-enabled=false' >> ~/.config/autostart/gnome-keyring-pkcs11.desktop
 
-As far as I know, this is a Gnome-specific circumstance and the interception by Gnome Keyring is [by design](https://wiki.gnome.org/Projects/GnomeKeyring/Ssh); it just doesn't play well when using smartcards and hardware tokens for OpenSSH authentication. I use smartcards and a Yubikey, so I disable that part of Gnome Keyring's functionality to allow applications and services to talk directly to gpg-agent. The instructions to disable this behavior provided on the Gnome Wiki were dated and insufficient for Debian's implementation of Gnome.
+As far as I know, this is a Gnome-specific circumstance and the interception by Gnome Keyring is [by design](https://wiki.gnome.org/Projects/GnomeKeyring/Ssh); it just doesn't play well when using smartcards and hardware tokens for OpenSSH authentication. I use smartcards and a Yubikey, so I disable that part of Gnome Keyring's functionality to allow applications and services to talk directly to gpg-agent.
 
 ### Caveats using Yubikey on Windows
 
