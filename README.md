@@ -16,6 +16,28 @@ Typically, this is located at C:\Users\YourName\AppData\Roaming\gnupg. You can p
 
 If you plan to use PuTTY or OpenSSH to connect to remote servers using a PGP/GPG authentication key or a smartcard, then also copy [gpg-agent.conf](https://github.com/Kajisav/gpgref/raw/master/gpg-agent.conf) to the %APPDATA%\gnupg directory right along with gpg.conf.
 
+#### Caveats using Yubikey on Windows
+
+If you are using a [Yubikey](https://www.yubico.com/) alongside Gpg4win, there is an issue where after unplugging the Yubikey from the system, when you go to plug it back in, the gpg-agent is not able to talk to the Yubikey and trying to do
+
+    gpg --card-status
+    
+from a commmand line results in a card error being returned. The best solution to this that I have tested and been using is to create a simple BAT file with instructions to stop and restart some services after unplugging the Yubikey and making a shortcut on the desktop to this BAT file:
+
+    gpg-connect-agent killagent /bye
+    net stop scardsvr
+    gpg-connect-agent /bye
+
+You can download the file [from here](https://raw.githubusercontent.com/Kajisav/gpgref/master/CardRemove.bat) or create it yourself using the above commands. Place it somewhere, I used C:\Users\Me\CardRemove.bat and created a shortcut on the desktop by right-clicking the BAT file and selecting "Send to Desktop (Create Shortcut)" from the menu.
+
+Once you have the CardRemove.bat shortcut on your desktop, you can right-click the shortcut and go to "Properties" then click the "Advanced..." button and check the "Run as administrator" checkbox, hit OK, then OK again. Then you have the following procedure when you remove the Yubikey:
+
+    1. Remove Yubikey
+    2. Run CardRemove.bat shortcut
+    3. gpg-agent is restarted and the Windows Smart Card service is stopped.
+    4. Re-insert the Yubikey when you are ready to use it again.
+    5. Run 'gpg --card-status' from a command line or check in Kleopatra to confirm the key is working.
+
 #### For GNU+Linux
 
 Copy my gpg.conf to your GnuPG home directory:
