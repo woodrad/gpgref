@@ -48,7 +48,7 @@ If you used the Bash method:
 
 References above to $XDG_RUNTIME_DIR points to /run/user/1000/ on my system, set by X. You can do echo $XDG_RUNTIME_DIR to confirm where your gnupg socket directory is located. You can also run gpg-agent from the command line along with --daemon to see the directory gpg-agent is using for its socket and export that to SSH_AUTH_SOCK.
 
-#### Disabling Gnome Keyring's SSH and PKI support
+#### Disabling Gnome Keyring's SSH and PKCS #11 support
 
 Gnome3's built-in keyring will set SSH_AUTH_SOCK on startup to $XDG_RUNTIME_DIR/keyring/ssh and intercept traffic intended for ssh-agent (or in our case, to gpg-agent). To disable this:
 
@@ -56,4 +56,4 @@ Gnome3's built-in keyring will set SSH_AUTH_SOCK on startup to $XDG_RUNTIME_DIR/
     echo 'X-GNOME-Autostart-enabled=false' >> ~/.config/autostart/gnome-keyring-ssh.desktop
     echo 'X-GNOME-Autostart-enabled=false' >> ~/.config/autostart/gnome-keyring-pkcs11.desktop
 
-As far as I know, this is a Gnome-specific circumstance and the interception by Gnome Keyring is by design; it just doesn't play well when using smartcards for OpenSSH authentication, which I am doing, so I disable that part of Gnome Keyring's functionality.
+As far as I know, this is a Gnome-specific circumstance and the interception by Gnome Keyring is [by design](https://wiki.gnome.org/Projects/GnomeKeyring/Ssh); it just doesn't play well when using smartcards and hardware tokens for OpenSSH authentication. I use smartcards and a Yubikey, so I disable that part of Gnome Keyring's functionality to allow applications and services to talk directly to gpg-agent. The instructions provided on the Gnome Wiki were dated and insufficient for Debian's implementation of Gnome.
