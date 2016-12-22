@@ -50,17 +50,31 @@ If you used the Bash method:
     
     source ~/.bashrc
 
-References above to $XDG_RUNTIME_DIR points to /run/user/1000/ on my system, set by X. You can do echo $XDG_RUNTIME_DIR to confirm where your gnupg socket directory is located. You can also run gpg-agent from the command line along with --daemon to see the directory gpg-agent is using for its socket and export that to SSH_AUTH_SOCK.
+References above to $XDG_RUNTIME_DIR points to /run/user/1000/ on my system, set by X. Your GNU+Linux distribution may use a different default location for the gpg-agent socket, such as your home .gnupg directory ~/.gnupg/S.gpg-agent.ssh for instance. If you run ssh-add -L and see something like this:
 
+    me@debian:~$ ssh-add -L
+    Error connecting to agent: No such file or directory
+
+That is because the location set for the SSH_AUTH_SOCK variable is incorrect. You can find out where gpg-agent is keeping its socket by starting the agent from the command line. You should check if it's already running first:
+
+    me@debian:~$ ps -A | grep gpg-agent
+     1561 ?        00:00:00 gpg-agent
+    me@debian:~$ sudo kill `pidof gpg-agent`
+    me@debian:~$ gpg-agent --daemon
+    SSH_AUTH_SOCK=/home/me/.gnupg/S.gpg-agent.ssh; export SSH_AUTH_SOCK;
+
+So now you know to run 'export SSH_AUTH_SOCK=/home/me/.gnupg/S.gpg-agent.ssh' and remember to also update ~/.pam_environment so this is handled upon startup. This process can differ depending on how your particular distribution is configured. I've tested using Debian Stretch and Ubuntu 16.04 LTS.
+    
 #### Disabling Gnome Keyring's SSH and PKCS #11 support
 
-Gnome3's built-in keyring will set SSH_AUTH_SOCK on startup to $XDG_RUNTIME_DIR/keyring/ssh and intercept traffic intended for ssh-agent (or in our case, to gpg-agent). To disable this:
+Gnome Keyring will set SSH_AUTH_SOCK on startup to $XDG_RUNTIME_DIR/keyring/ssh and intercept traffic intended for ssh-agent (or in our case, to gpg-agent). To disable this:
 
+    mkdir ~/.config/autostart
     cp /etc/xdg/autostart/gnome-keyring-*.desktop ~/.config/autostart/.
     echo 'X-GNOME-Autostart-enabled=false' >> ~/.config/autostart/gnome-keyring-ssh.desktop
     echo 'X-GNOME-Autostart-enabled=false' >> ~/.config/autostart/gnome-keyring-pkcs11.desktop
 
-As far as I know, this is a Gnome-specific circumstance and the interception by Gnome Keyring is [by design](https://wiki.gnome.org/Projects/GnomeKeyring/Ssh); it just doesn't play well when using smartcards and hardware tokens for OpenSSH authentication. I use smartcards and a Yubikey, so I disable that part of Gnome Keyring's functionality to allow applications and services to talk directly to gpg-agent.
+As far as I know, this is just a Gnome Keyring thing and the interception by it is [by design](https://wiki.gnome.org/Projects/GnomeKeyring/Ssh); it just doesn't play well when using smartcards and hardware tokens for OpenSSH authentication and can cause issues when using gpg commands from a remote OpenSSH shell. I use OpenPGP cards and a Yubikey, so I also disable PKCS #11 support in Gnome Keyring's to make sure smartcard middleware/drivers talk directly to gpg-agent.
 
 ### Caveats using Yubikey on Windows
 
