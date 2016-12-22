@@ -3,6 +3,8 @@ My personal GnuPG configuration.
 
 It should work on GNU+Linux systems running [GnuPG](https://gnupg.org/) and Microsoft Windows running [Gpg4win](https://www.gpg4win.org).
 
+It will also work alongside hardware security tokens and smartcards presuming you have the required software installed for your smartcard or token. I've tested using the Yubico NEO and [OpenPGP smartcards](http://www.g10code.com/p-card.html) available from [KernelConcepts.de](http://shop.kernelconcepts.de/#openpgp).
+
 ### Installation
 
 Setup involves copying the configuration files from here into the home directory of your system.
