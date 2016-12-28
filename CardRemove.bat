@@ -1,3 +1,3 @@
 gpg-connect-agent killagent /bye
-net stop scardsvr
+taskkill /f /im "scdaemon.exe"
 gpg-connect-agent /bye
