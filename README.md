@@ -82,18 +82,12 @@ If you are using a Yubikey alongside Gpg4win, there is an issue where after unpl
 
     gpg --card-status
     
-from a command line results in a card error being returned. The best solution to this that I have tested is to create a simple BAT file with instructions to stop and restart some services after unplugging the Yubikey and making a shortcut on the desktop to this BAT file:
+from a command line results in a card error being returned. The best solution to this that I have tested is to create a simple batch file with instructions to stop and restart some services after unplugging the Yubikey:
 
     gpg-connect-agent killagent /bye
-    net stop scardsvr
+    taskkill /f /im "scdaemon.exe"
     gpg-connect-agent /bye
 
-You can download the file [from here](https://raw.githubusercontent.com/Kajisav/gpgref/master/CardRemove.bat) or create it yourself using the above commands. Place it somewhere, I used C:\Users\Me\CardRemove.bat and created a shortcut on the desktop by right-clicking the BAT file and selecting "Send to Desktop (Create Shortcut)" from the menu.
+You can download the file [from here](https://raw.githubusercontent.com/Kajisav/gpgref/master/CardRemove.bat) or create it yourself using the above commands. Place it somewhere, I used C:\Users\Me\CardRemove.bat and created a shortcut on the desktop by right-clicking the file and selecting "Send to Desktop (Create Shortcut)" from the menu.
 
-Once you have the CardRemove.bat shortcut on your desktop, you can right-click the shortcut and go to "Properties" then click the "Advanced..." button and check the "Run as administrator" checkbox, hit OK, then OK again. Then you have the following procedure when you remove the Yubikey:
-
-    1. Remove Yubikey
-    2. Run CardRemove.bat shortcut
-    3. gpg-agent is restarted and the Windows Smart Card service is stopped.
-    4. Re-insert the Yubikey when you are ready to use it again.
-    5. Run 'gpg --card-status' from a command line or check in Kleopatra to confirm the key is working.
+Once you have the CardRemove.bat shortcut on your desktop, you can right-click the shortcut and click "Run as administrator." The batch file can be ran without removing the Yubikey and should immediately restore GPG connectivity with it.
